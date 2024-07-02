@@ -30,9 +30,14 @@ def hello():
         client_ip = request.remote_addr
 
     # Get location from IP address using Geoapify
+    """
     geoapi_url = f'https://api.geoapify.com/v1/ipinfo?apiKey={GEO_API_KEY}&ip={client_ip}'
     geoapi_response = requests.get(geoapi_url).json()
     location = geoapi_response.get('city', 'unknown location')
+    """
+    geoip_url = f'http://ip-api.com/json/{client_ip}'
+    geoip_response = requests.get(geoip_url).json()
+    location = geoip_response.get('city')
 
     # Get weather data for the location
     weather_url = f"https://api.tomorrow.io/v4/weather/forecast?location=\
