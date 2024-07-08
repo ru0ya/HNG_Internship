@@ -63,7 +63,7 @@ class LoginView(generics.GenericAPIView):
 class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    lookup_field = 'user_id'
+    lookup_field = 'userId'
     permission_classes = [permissions.IsAuthenticated]
 
 
@@ -81,5 +81,5 @@ class OrganizationListView(generics.ListCreateAPIView):
 class OrganizationDetailView(generics.RetrieveAPIView):
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
-    lookup_field = 'org_id'
+    lookup_field = 'orgId'
     permission_classes = [permissions.IsAuthenticated]
