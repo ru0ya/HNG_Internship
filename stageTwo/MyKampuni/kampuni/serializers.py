@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from kampuni.models import User, Organisation
+from kampuni.models import User, Organization
 
 
-class UserSerializer(serializers.ModelSerialiser):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-                'userId',
+                'user_id',
                 'first_name',
                 'last_name',
                 'email',
@@ -15,10 +15,12 @@ class UserSerializer(serializers.ModelSerialiser):
                 ]
 
 
-class OrganizationSerializer(serializers.ModelSerializers):
+class OrganizationSerializer(serializers.ModelSerializer):
+    users = UserSerializer(many=True, read_only=True)
+
     class Meta:
-        model = Organisation
-        fields = ['orgId', 'name', 'description']
+        model = Organization
+        fields = ['org_id', 'name', 'description']
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -34,8 +36,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        Organisation.objects.create(
+        organization = Organization.objects.create(
                 name=f"{user.first_name}'s Organisation",
-                users=[user]
                 )
+        organization.users.add(user)
+
         return user

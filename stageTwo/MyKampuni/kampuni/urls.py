@@ -1,6 +1,6 @@
 from django.urls import path
 
-from kampuni.views import(
+from kampuni.views import (
         RegisterView,
         LoginView,
         UserDetailView,

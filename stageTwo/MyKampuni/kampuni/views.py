@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from kampuni.models import User, Organization
-from kampuni.serializers import(
+from kampuni.serializers import (
         UserSerializer,
         OrganizationSerializer,
         RegisterSerializer
@@ -63,7 +63,7 @@ class LoginView(generics.GenericAPIView):
 class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    lookup_field = 'userId'
+    lookup_field = 'user_id'
     permission_classes = [permissions.IsAuthenticated]
 
 
@@ -75,11 +75,12 @@ class OrganizationListView(generics.ListCreateAPIView):
         return self.request.user.organizations.all()
 
     def perform_create(self, serializer):
-        serializer.save(users=[self.request.user])
+        organization = serializer.save()
+        organization.users.set([self.request.user])
 
 
 class OrganizationDetailView(generics.RetrieveAPIView):
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
-    lookup_field = 'orgId'
+    lookup_field = 'org_id'
     permission_classes = [permissions.IsAuthenticated]

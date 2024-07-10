@@ -49,7 +49,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    userId = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    user_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
@@ -70,7 +70,7 @@ class User(AbstractBaseUser):
 
 
 class Organization(models.Model):
-    orgId = models.CharField(max_length=255, unique=True)
+    org_id = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     users = models.ManyToManyField(User, related_name='organizations')
