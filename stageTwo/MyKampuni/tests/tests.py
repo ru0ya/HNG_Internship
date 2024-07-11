@@ -42,7 +42,7 @@ class AuthTests(APITestCase):
 
     def test_protected_endpoint(self):
         register_response = self.register_user()
-        self.assertEqual(register_response.status_code, status.HTPP_201_CREATED)
+        self.assertEqual(register_response.status_code, status.HTTP_201_CREATED)
 
         url = reverse('login')
         data = {

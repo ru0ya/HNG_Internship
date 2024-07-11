@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 
 from kampuni.models import User, Organization
 
@@ -33,12 +34,19 @@ class RegisterSerializer(serializers.ModelSerializer):
                 'password',
                 'phone'
                 ]
+        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        user_data = {
+            'first_name': validated_data.get('first_name'),
+            'last_name': validated_data.get('last_name'),
+            'email': validated_data.get('email'),
+            'password': make_password(validated_data.get('password')),
+            'phone': validated_data.get('phone')
+            }
+        user = User.objects.create(**user_data)
         organization = Organization.objects.create(
-                name=f"{user.first_name}'s Organisation",
-                )
+            name=f"{user.first_name}'s Organization"
+            )
         organization.users.add(user)
-
         return user

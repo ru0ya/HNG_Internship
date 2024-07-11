@@ -149,6 +149,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTHENTICATION_BACKENDS = [
+        'kampuni.authentication.EmailBackend',
+        'django.contrib.auth.backends.ModelBackend',
+        ]
+
+
 SIMPLE_JWT = {
         'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
         'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
