@@ -15,8 +15,8 @@ class AuthTests(APITestCase):
         data = {
                 "first_name": "John",
                 "last_name": "Doe",
-                "email": "john@example.com",
-                "password": "password123",
+                "email": "testdevru0ya@gmail.com",
+                "password": "password123.",
                 "phone": "123456789"
                 }
         return self.client.post(url, data, format='json')
@@ -24,15 +24,19 @@ class AuthTests(APITestCase):
     def test_register_user(self):
         response = self.register_user()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        print("Registration succesful:", response.data)
 
     def test_login_user(self):
         register_response = self.register_user()
-        self.assertEqual(register_response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(
+                register_response.status_code,
+                status.HTTP_201_CREATED
+                )
 
         url = reverse('login')
         data = {
-                "email": "john@example.com",
-                "password": "password123"
+                "email": "testdevru0ya@gmail.com",
+                "password": "password123."
                 }
         response = self.client.post(url, data, format='json')
         print("Login Response:", response.data)
@@ -46,8 +50,8 @@ class AuthTests(APITestCase):
 
         url = reverse('login')
         data = {
-                "email": "john@example.com",
-                "password": "password123"
+                "email": "testdevru0ya@gmail.com",
+                "password": "password123."
                 }
 
         response = self.client.post(url, data, format='json')
