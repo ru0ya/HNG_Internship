@@ -41,7 +41,7 @@ class AuthTests(APITestCase):
         response = self.client.post(url, data, format='json')
         print("Login Response:", response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIN('data', response.data)
+        self.assertIn('data', response.data)
         self.assertIn('accessToken', response.data['data'])
 
     def test_protected_endpoint(self):
